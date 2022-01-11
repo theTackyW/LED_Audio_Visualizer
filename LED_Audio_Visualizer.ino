@@ -72,47 +72,47 @@ void loop() {
 }
 
 
-
 void SingleLED(int v,int band){
  //v = v-90;
  //Serial.println(v);
-  int t0=149*volSen;
-  int t1=150*volSen;
-  int t2=250*volSen;
-  int t3=400*volSen;
-  int t4=500*volSen;
-  int t5=600*volSen;
-  int t6=700*volSen;
-  int t7=800*volSen;
-  int t8=980*volSen;
-  if (v<=t0){
+  int t0 = 149*volSen;
+  int t1 = 150*volSen;
+  int t2 = 250*volSen;
+  int t3 = 400*volSen;
+  int t4 = 500*volSen;
+  int t5 = 600*volSen;
+  int t6 = 700*volSen;
+  int t7 = 800*volSen;
+  int t8 = 980*volSen;
+  if (v <= t0){
     clearAll(band);
     }
-  if (v>t1){
+  if (v > t1){
     setLEDnum(1,band,v-t1);
   }
-  if (v>=t2){
+  if (v >= t2){
     setLEDnum(2,band,v-t2);
   }
-  if (v>=t3){
+  if (v >= t3){
     setLEDnum(3,band,v-t3);
   }
-  if (v>=t4){
+  if (v >= t4){
     setLEDnum(4,band,v-t4);
   }
-  if (v>=t5){
+  if (v >= t5){
     setLEDnum(5,band,v-t5);
   }
-  if (v>=t6){
+  if (v >= t6){
     setLEDnum(6,band,v-t6);
   }
-  if (v>=t7){
+  if (v >= t7){
     setLEDnum(7,band,v-t7);
   }
-  if (v>=t8){
+  if (v >= t8){
     setLEDnum(8,band,v-t8);
   }
 }
+
 
 void setLEDnum(int n,int band,double bright){
  double maxBright = (255/255)*brightControl;
@@ -120,31 +120,32 @@ void setLEDnum(int n,int band,double bright){
  if (band%2==0){
    for(int i=band*8; i<band*8+8; i++) { // For each pixel...
         if(i<n+band*8-1){
-        pixels.setPixelColor(i, pixels.Color(153*maxBright, 0*maxBright, 153*maxBright));
+          pixels.setPixelColor(i, pixels.Color(153*maxBright, 0*maxBright, 153*maxBright));
         }
         else if(i == n+band*8-1){
-        pixels.setPixelColor(i, pixels.Color(153*bright, 0*bright, 153*bright));
+          pixels.setPixelColor(i, pixels.Color(153*bright, 0*bright, 153*bright));
         }
         else{
-        pixels.setPixelColor(i, pixels.Color(0,0,0));
+          pixels.setPixelColor(i, pixels.Color(0,0,0));
         }
    }
-  }
+ }
  else{
    for(int i=(band+1)*8-1; i>(band+1)*8-1-8; i--) { // For each pixel...
         if (i > (band+1)*8-1-n+1){
-        pixels.setPixelColor(i, pixels.Color(153*maxBright, 0*maxBright, 153*maxBright));
+          pixels.setPixelColor(i, pixels.Color(153*maxBright, 0*maxBright, 153*maxBright));
         }
         else if (i == (band+1)*8-1-n+1){
-        pixels.setPixelColor(i, pixels.Color(153*bright, 0*bright, 153*bright));
+          pixels.setPixelColor(i, pixels.Color(153*bright, 0*bright, 153*bright));
         }
         else{
-        pixels.setPixelColor(i, pixels.Color(0,0,0));
+          pixels.setPixelColor(i, pixels.Color(0,0,0));
         }
    }
-   }
+ }
 }
-  
+
+
 void clearAll(int band){
   for(int i=band*8; i<band*8+8; i++) { // For each pixel...
       pixels.setPixelColor(i, pixels.Color(0, 0, 0));
