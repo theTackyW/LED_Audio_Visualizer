@@ -15,14 +15,12 @@ double volSen; //volume sensitivity
 double brightControl; //global brightness
   
 void setup() {
-  // put your setup code here, to run once:
   #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
     clock_prescale_set(clock_div_1);
   #endif
   pixels.begin();
   Serial.begin(9600);
   pixels.clear();
-  //mic test
 
   //pinMode(MIC, INPUT);
   //pinMode(4, INPUT);
@@ -131,7 +129,6 @@ void setLEDnum(int n,int band,double bright){
         pixels.setPixelColor(i, pixels.Color(0,0,0));
         }
    }
-   //pixels.show();   // Send the updated pixel colors to the hardware.
   }
  else{
    for(int i=(band+1)*8-1; i>(band+1)*8-1-8; i--) { // For each pixel...
@@ -145,17 +142,12 @@ void setLEDnum(int n,int band,double bright){
         pixels.setPixelColor(i, pixels.Color(0,0,0));
         }
    }
-   //pixels.show();   // Send the updated pixel colors to the hardware.
    }
 }
   
 void clearAll(int band){
   for(int i=band*8; i<band*8+8; i++) { // For each pixel...
-
-      // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
-      // Here we're using a moderately bright green color:
       pixels.setPixelColor(i, pixels.Color(0, 0, 0));
-      //delay(5); // Pause before next pass through loop
       }
-      pixels.show();   // Send the updated pixel colors to the hardware.
+      pixels.show();
   }
