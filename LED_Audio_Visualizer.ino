@@ -48,7 +48,10 @@ void loop() {
  int s = 0;
  volSen = analogRead(Vknob)/1024.0;
  brightControl = analogRead(Bknob)/1024.0;
-
+ Serial.print(volSen);
+ Serial.print("   ");
+ Serial.print(brightControl);
+ Serial.println();
  for (int i = 0; i < 7; i++) {
     digitalWrite       (STROBE, LOW);
     delayMicroseconds  (5);                  // Delay necessary due to timing diagram
@@ -117,13 +120,16 @@ void SingleLED(int v,int band){
 void setLEDnum(int n,int band,double bright){
  double maxBright = (255/255)*brightControl;
  bright = (bright/255)*brightControl;
+ double r = colorFadeR(0,153,n);
+ double g = colorFadeG(0,0,n);
+ double b = colorFadeB(153,153,n);
  if (band%2==0){
    for(int i=band*8; i<band*8+8; i++) { // For each pixel...
         if(i<n+band*8-1){
-          pixels.setPixelColor(i, pixels.Color(153*maxBright, 0*maxBright, 153*maxBright));
+          pixels.setPixelColor(i, pixels.Color(r*maxBright, g*maxBright, b*maxBright));
         }
         else if(i == n+band*8-1){
-          pixels.setPixelColor(i, pixels.Color(153*bright, 0*bright, 153*bright));
+          pixels.setPixelColor(i, pixels.Color(r*bright, g*bright, b*bright));
         }
         else{
           pixels.setPixelColor(i, pixels.Color(0,0,0));
@@ -133,10 +139,10 @@ void setLEDnum(int n,int band,double bright){
  else{
    for(int i=(band+1)*8-1; i>(band+1)*8-1-8; i--) { // For each pixel...
         if (i > (band+1)*8-1-n+1){
-          pixels.setPixelColor(i, pixels.Color(153*maxBright, 0*maxBright, 153*maxBright));
+          pixels.setPixelColor(i, pixels.Color(r*maxBright, g*maxBright, b*maxBright));
         }
         else if (i == (band+1)*8-1-n+1){
-          pixels.setPixelColor(i, pixels.Color(153*bright, 0*bright, 153*bright));
+          pixels.setPixelColor(i, pixels.Color(r*bright, g*bright, b*bright));
         }
         else{
           pixels.setPixelColor(i, pixels.Color(0,0,0));
@@ -152,3 +158,16 @@ void clearAll(int band){
       }
       pixels.show();
   }
+
+double colorFadeR(int r1,int r2,int n){
+  double r = r1+n*(r2-r1)/8;
+  return r;
+  }
+double colorFadeG(int g1,int g2,int n){
+  double g = g1+n*(g2-g1)/8;
+  return g;
+  }
+double colorFadeB(int b1,int b2,int n){
+  double b = b1+n*(b2-b1)/8;
+  return b;
+  }  
