@@ -47,6 +47,7 @@ void setup() {
 void loop() {
  int s = 0;
  volSen = analogRead(Vknob)/1024.0;
+ //volSen = 0.5;
  brightControl = analogRead(Bknob)/1024.0;
  Serial.print(volSen);
  Serial.print("   ");
@@ -120,9 +121,9 @@ void SingleLED(int v,int band){
 void setLEDnum(int n,int band,double bright){
  double maxBright = (255/255)*brightControl;
  bright = (bright/255)*brightControl;
- double r = colorFadeR(0,153,n);
- double g = colorFadeG(0,0,n);
- double b = colorFadeB(153,153,n);
+ double r = colorFadeR(143,0,n);
+ double g = colorFadeG(39,155,n);
+ double b = colorFadeB(233,0,n);
  if (band%2==0){
    for(int i=band*8; i<band*8+8; i++) { // For each pixel...
         if(i<n+band*8-1){
@@ -159,6 +160,7 @@ void clearAll(int band){
       pixels.show();
   }
 
+//fade color from [r1,g1,b1] to [r2,g2,b2] (low to high)
 double colorFadeR(int r1,int r2,int n){
   double r = r1+n*(r2-r1)/8;
   return r;
